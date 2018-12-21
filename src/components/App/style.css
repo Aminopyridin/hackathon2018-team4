@@ -1,0 +1,12 @@
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.treeWrapper {
+    position: relative;
+    display: flex;
+    min-width: 50%;
+    justify-content: center;
+    align-items: center;
+}

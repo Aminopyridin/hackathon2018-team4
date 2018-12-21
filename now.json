@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "alias": ["https://hackathon2018-team4.now.sh"],
+  "builds": [
+    { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" }  }
+  ]
+}
