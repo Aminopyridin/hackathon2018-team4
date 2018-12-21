@@ -10,4 +10,4 @@
 Чтобы развернуть приложение на сервере:
 1. Сделай push в ветку master или сделай pull request в ветку мастер и прими его.
 2. Подожди пару минут
-3. Проверяй по адресу https://hackathon2018-team4.now.sh/index.html
+3. Проверяй по адресу https://hackathon2018-team4.now.sh/index.html/
