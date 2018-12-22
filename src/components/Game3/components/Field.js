@@ -52,7 +52,16 @@ export default class Field extends React.Component {
             field[this.lastClickedElement.rowIndex][this.lastClickedElement.columnIndex].displayed = false;
             this.lastClickedElement = null;
         }
-
+        let everyDisplayed = true;
+        for (let row of this.state.field)
+            for (let elem of row) {
+                if (!elem.displayed) {
+                    everyDisplayed = false;
+                    break;
+                }
+            }
+        if (everyDisplayed)
+            this.props.gameCallback(this.props.width * this.props.height);
         this.setState({field: field});
     }
 
@@ -101,5 +110,6 @@ export default class Field extends React.Component {
 
 Field.propTypes = {
     width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired
+    height: PropTypes.number.isRequired,
+    gameCallback: PropTypes.func.isRequired
 };
