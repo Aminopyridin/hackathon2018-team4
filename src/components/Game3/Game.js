@@ -13,7 +13,7 @@ export default class Game extends React.Component {
     render() {
         return (
             <div>
-                <Field width={1} height={2} gameCallback={(c) => this.callback(c)}/>
+                <Field width={6} height={5} gameCallback={(c) => this.callback(c)}/>
                 {this.state.gameover && <p>Win count: {this.state.count}</p>}
             </div>
         )
