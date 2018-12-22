@@ -6,7 +6,8 @@ import {FieldGenerator} from "../FieldGenerator";
 export default class Field extends React.Component {
     constructor(props) {
         super(props);
-        const field = FieldGenerator.generate();
+        const {width, height} = this.props;
+        const field = FieldGenerator.generate({height: height, width: width});
         this.state = {
           field: field
         };
@@ -24,7 +25,7 @@ export default class Field extends React.Component {
             if (this.lastClickedElement === null) {
                 this.handle(imageKey, rowIndex, columnIndex);
             } else {
-                setTimeout(() => this.handle(imageKey, rowIndex, columnIndex), 300)
+                setTimeout(() => this.handle(imageKey, rowIndex, columnIndex), 600)
             }
         });
     }
@@ -98,7 +99,7 @@ export default class Field extends React.Component {
     }
 }
 
-/*Field.propTypes = {
+Field.propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired
-}; */
+};

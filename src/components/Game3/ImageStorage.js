@@ -13,5 +13,17 @@ export class ImageStorage {
         'navalny': navalny,
         'yarovaya': yarovaya,
         'default': defaultImg
+    };
+
+    static getNames() {
+        const names = [];
+        for(let name in this.storage) {
+            names.push(name);
+        }
+        return names;
+    }
+
+    static getNamesWithoutDefault() {
+        return this.getNames().filter(x => x != 'default');
     }
 }
