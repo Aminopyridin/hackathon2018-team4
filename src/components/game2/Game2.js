@@ -18,7 +18,7 @@ export class Game2 extends React.Component {
 
     render() {
         return <div>
-            <TreeView top={"200px"} left={"-50px"} goodCount={this.state.goodCount}/>
+            <TreeView goodCount={this.state.goodCount}/>
             <BadView count={this.state.badCount}/>
             {this.state.trashItems.map(i => i.item)}
         </div>
