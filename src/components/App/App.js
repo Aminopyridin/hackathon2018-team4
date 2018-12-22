@@ -15,9 +15,6 @@ export default class App extends React.Component {
                             <Link to="/tree">ChristosTree</Link>
                         </li>
                         <li>
-                            <Link to="/lights">Lights</Link>
-                        </li>
-                        <li>
                             <Link to="/game2">Game2</Link>
                         </li>
                         <li>
@@ -26,7 +23,6 @@ export default class App extends React.Component {
                     </ul>
                     <hr />
                     <Route path="/tree" component={this.Tree} />
-                    <Route path="/lights" component={Lights} />
                     <Route path="/game2" component={Game2} />
                     <Route path="/game3" component={Game} />
                 </div>
