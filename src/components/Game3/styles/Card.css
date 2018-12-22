@@ -1,7 +1,10 @@
 .card {
     width: 100px;
     height: 100px;
-    background: red;
     display: inline-block;
-    margin: 5px ;
+    margin: 5px;
+}
+
+.content {
+    border-radius: 10%;
 }

@@ -1,6 +1,17 @@
-import putin from './images/puting.png'
-
+import putin from './images/putin.png'
+import medvedev from './images/dimon.png'
+import milonov from './images/milonov.png'
+import yarovaya from './images/yarovaya.png'
+import navalny from './images/navalny.png'
+import defaultImg from './images/default.png'
 
 export class ImageStorage {
-    
+    static storage = {
+        'putin': putin,
+        'medvedev': medvedev,
+        'milonov': milonov,
+        'navalny': navalny,
+        'yarovaya': yarovaya,
+        'default': defaultImg
+    }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card.js';
+import {FieldGenerator} from "../FieldGenerator";
 
 export default class Field extends React.Component {
     constructor(props) {
@@ -9,15 +10,58 @@ export default class Field extends React.Component {
         this.state = {
           field: field
         };
+        this.lastClickedElement = null;
     }
 
     update(imageKey, rowIndex, columnIndex) {
-        alert(`${imageKey}_${rowIndex}_${columnIndex}`);
         const {field} = this.state;
-        field[rowIndex][columnIndex].displayed = !field[rowIndex][columnIndex].displayed;
+        const clickedElement = field[rowIndex][columnIndex];
+        clickedElement.displayed = true;
+
         this.setState({
             field: field
+        }, () => {
+            if (this.lastClickedElement === null) {
+                this.handle(imageKey, rowIndex, columnIndex);
+            } else {
+                setTimeout(() => this.handle(imageKey, rowIndex, columnIndex), 300)
+            }
         });
+    }
+
+    handle(imageKey, rowIndex, columnIndex) {
+        const {field} = this.state;
+        const clickedElement = field[rowIndex][columnIndex];
+
+        if (this.lastClickedElement === null) {
+            this.lastClickedElement = {
+                rowIndex: rowIndex,
+                columnIndex: columnIndex,
+                imageKey: imageKey
+            };
+            clickedElement.displayed = true;
+        } else if (this.comparePosition(clickedElement, this.lastClickedElement)) {
+            return;
+        } else if (this.compareImageKey(clickedElement, this.lastClickedElement)) {
+            clickedElement.displayed = true;
+            this.lastClickedElement = null;
+
+        } else {
+            clickedElement.displayed = false;
+            field[this.lastClickedElement.rowIndex][this.lastClickedElement.columnIndex].displayed = false;
+            this.lastClickedElement = null;
+        }
+
+        this.setState({field: field});
+    }
+
+    comparePosition(firstElement, secondElement){
+        return firstElement.rowIndex === secondElement.rowIndex
+        && firstElement.columnIndex === secondElement.columnIndex;
+    }
+
+    compareImageKey(firstElement, secondElement) {
+        return firstElement.imageKey === secondElement.imageKey;
     }
 
     createCallback(rowIndex, columnIndex) {
@@ -52,26 +96,6 @@ export default class Field extends React.Component {
             </div>
         )
     }
-}
-
-export class FieldGenerator {
-    static generate() {
-            const field = [];
-            for (let i = 0; i < 3; i++) {
-            field[i] = [];
-            for(let j = 0; j < 3; j++)
-                field[i][j] = this.createCardInfo(i + j.toString());
-        }
-        return field;
-    }
-
-    static createCardInfo(imageKey, displayed = true) {
-        return {
-            imageKey: imageKey,
-            displayed: displayed
-        }
-    }
-
 }
 
 /*Field.propTypes = {

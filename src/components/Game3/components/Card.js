@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from '../styles/Card.css';
-import images from '../images/puting.png';
 import {ImageStorage} from "../ImageStorage";
 
 export default class Card extends React.Component {
@@ -10,8 +9,10 @@ export default class Card extends React.Component {
     }
 
     onClick() {
-        const {callback, imageKey} = this.props;
-        callback(imageKey);
+        const {displayed, callback, imageKey} = this.props;
+        if (!displayed) {
+            callback(imageKey);
+        }
     }
 
     render () {
@@ -25,9 +26,9 @@ export default class Card extends React.Component {
 
     renderImage() {
         const {imageKey, displayed} = this.props;
-        const imageSrc = ImageStorage.storage['putin'];
+        const imageSrc = displayed ? ImageStorage.storage[imageKey] : ImageStorage.storage['default'];
         return (
-            <img style={{"width": "100%", "height": "100%"}} src={imageSrc}/>
+            <img className={styles.content} style={{"width": "100%", "height": "100%"}} src={imageSrc}/>
         )
     }
 }
