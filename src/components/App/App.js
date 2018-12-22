@@ -1,5 +1,6 @@
 import React from 'react';
 import ChristmasTree from '../ChristmasTree/ChristmasTree';
+import Lights from '../firstGame/Lights/Lights'
 import styles from './style.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import Game from "../Game3/Game";
@@ -29,6 +30,7 @@ export default class App extends React.Component {
             <div className={styles.app}>
                 <div className={styles.treeWrapper}>
                     <ChristmasTree />
+                    <Lights/>
                 </div>
             </div>
         )
