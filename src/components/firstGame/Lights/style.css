@@ -1,0 +1,73 @@
+.lights{
+    position: absolute;
+    width: 200px;
+    height: 300px;
+}
+
+.light{
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.light1{
+    bottom: 25px;
+    left: 20px;
+}
+
+.light2{
+    bottom: 25px;
+    right: 20px;
+}
+
+.light3{
+    bottom:25px;
+    left: 60px;
+}
+
+.light4{
+    bottom: 25px;
+    right: 60px;
+}
+
+.light5{
+    bottom: 70px;
+    right: 40px;
+}
+
+.light6{
+    bottom: 70px;
+    left: 40px;
+}
+
+.light7{
+    bottom: 70px;
+    left: calc(50% - 10px);
+}
+
+.light8{
+    bottom: 115px;
+    left: 60px;
+}
+
+.light9{
+    bottom: 115px;
+    right: 60px;
+}
+
+.light10{
+    bottom: 160px;
+    left: calc(50% - 10px);
+}
+
+.light11{
+    bottom: 205px;
+    right: 75px;
+}
+
+.light12{
+    bottom: 205px;
+    left: 75px;
+}
