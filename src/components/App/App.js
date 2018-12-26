@@ -12,7 +12,7 @@ export default class App extends React.Component {
                 <div>
                     <ul>
                         <li>
-                            <Link to="/tree">ChristosTree</Link>
+                            <Link to="/tree">1game</Link>
                         </li>
                         <li>
                             <Link to="/game2">Game2</Link>
