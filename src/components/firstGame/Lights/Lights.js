@@ -5,52 +5,88 @@ import PropTypes from "prop-types";
 
 const SequenceContext = React.createContext();
 
-export default class Lights extends React.PureComponent {
+export default class Lights extends React.Component {
     constructor() {
         super();
-        this.state = {isCorrect: true, sequence: [7, 5, 6, 8, 10, 9], cursor: 0, attemp: 1};
+        this.state = {
+            sequence: [7, 5, 6, 8, 10, 9],
+            cursor: 0,
+            attemp: 1,
+            turnArr: [false, false, false, false, false, false],
+            KOSTYLb: false
+        };
     }
 
-    handleClick =(id)=>{
-        if (id === this.state.sequence[this.state.cursor]){
-            this.setState(state=>({isCorrect: true, sequence: [7, 5, 6, 8, 10, 9], falsecursor: state.cursor + 1, attemp: state.attemp}));
-            console.log(this.state.cursor);
+    shouldComponentUpdate() {
+        return true;
+    }
+
+    handleClick = (id, id2) => {
+        if (id === this.state.sequence[this.state.cursor]) {
+            let turnArr2 = this.state.turnArr;
+            turnArr2[id2] = true;
+            this.setState(state => ({sequence: [7, 5, 6, 8, 10, 9], cursor: state.cursor + 1, turnArr: turnArr2, KOSTYLb: false}));
             return 'OK';
         } else {
-            this.setState(state=>({isCorrect: false, sequence: [7, 5, 6, 8, 10, 9], cursor: state.cursor + 1, attemp: state.attemp+1}));
-            this.render();
+            let turnArr2 = this.state.turnArr;
+            turnArr2[id2] = true;
+            this.setState(state => ({sequence: [7, 5, 6, 8, 10, 9], cursor: state.cursor + 1, turnArr: turnArr2, KOSTYLb: false}));
+            setTimeout(() => {
+                this.setState(() => ({
+                    sequence: [7, 5, 6, 8, 10, 9],
+                    cursor: 0,
+                    turnArr: [false, false, false, false, false, false],
+                    KOSTYLb: false
+                }));
+            }, 500);
             return 'NE_OK';
         }
     };
 
-    reload =()=>{
-        this.setState(state=>({isCorrect: true, sequence: [7, 5, 6, 8, 10, 9], cursor: 0}));
+    componentDidUpdate() {
+        if (this.state.cursor === this.state.sequence.length) {
+            setTimeout(() => {
+                this.setState(() => ({
+                    sequence: [7, 5, 6, 8, 10, 9],
+                    cursor: 0,
+                    turnArr: [false, false, false, false, false, false],
+                    KOSTYLb: true
+                }));
+            }, 500);
+        }
     }
 
     render() {
-        const gameManager = this.state;
+        if (this.state.KOSTYLb) {
+            alert("ВЫ ВЫИГРАЛИ!!")
+        }
+
         return (
             <div className={styles.lights}>
-                    {/*<Light positionClass={styles.light1} />
+            {/*<Light positionClass={styles.light1} />
                 <Light positionClass={styles.light2} />
                 <Light positionClass={styles.light3} />
                 <Light positionClass={styles.light4} />*/}
-                    <Light positionClass={styles.light5} id={5} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    <Light positionClass={styles.light6} id={6} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    <Light positionClass={styles.light7} id={7} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    <Light positionClass={styles.light8} id={8} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    <Light positionClass={styles.light9} id={9} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    <Light positionClass={styles.light10} id={10} isTurned={false} functionPack={{handleClick: this.handleClick, reload: this.reload }} attemp={this.state.attemp}/>
-                    {/*<Light positionClass={styles.light11} />
+            <Light positionClass={styles.light5} id={5} id2={0} isTurned={this.state.turnArr[0]}
+        handleClick={this.handleClick}/>
+        <Light positionClass={styles.light6} id={6} id2={1} isTurned={this.state.turnArr[1]}
+        handleClick={this.handleClick}/>
+        <Light positionClass={styles.light7} id={7} id2={2} isTurned={this.state.turnArr[2]}
+        handleClick={this.handleClick}/>
+        <Light positionClass={styles.light8} id={8} id2={3} isTurned={this.state.turnArr[3]}
+        handleClick={this.handleClick}/>
+        <Light positionClass={styles.light9} id={9} id2={4} isTurned={this.state.turnArr[4]}
+        handleClick={this.handleClick}/>
+        <Light positionClass={styles.light10} id={10} id2={5} isTurned={this.state.turnArr[5]}
+        handleClick={this.handleClick}/>
+        {/*<Light positionClass={styles.light11} />
                 <Light positionClass={styles.light12} />*/}
-                <p>{this.state.cursor}</p>
-
-            </div>
-        );
+    </div>
+    );
     }
 }
 
-class Light extends React.Component {
+class Light extends React.PureComponent {
     constructor(props) {
         super(props);
         this.props = props;
@@ -58,36 +94,27 @@ class Light extends React.Component {
             style: !this.props.isTurned
                 ? {backgroundColor: 'white'}
                 : {backgroundColor: 'red'},
-            isTurned: this.props.isTurned};
+            isTurned: this.props.isTurned
+        };
     }
+
+    static getDerivedStateFromProps(props, state) {
+        return {
+            style: !props.isTurned
+                ? {backgroundColor: 'white'}
+                : {backgroundColor: 'red'},
+            isTurned: props.isTurned
+        };
+    }
+
     handleChange = () => {
-        switch(this.props.functionPack.handleClick(this.props.id)) {
-            case 'OK':
-                this.setState(state =>
-                    !state.isTurned ?
-                        {style: {backgroundColor: 'red'}, isTurned: true} :
-                        {style: {backgroundColor: 'white'}, isTurned: false});
-                return;
-            case 'NE_OK':
-                this.setState(state =>
-                    !state.isTurned ?
-                        {style: {backgroundColor: 'red'}, isTurned: true} :
-                        {style: {backgroundColor: 'white'}, isTurned: false});
-                setTimeout(() => {
-                    this.setState(state =>
-                        !state.isTurned ?
-                            {style: {backgroundColor: 'red'}, isTurned: true} :
-                            {style: {backgroundColor: 'white'}, isTurned: false});
-                    this.props.functionPack.reload();
-                }, 1000);
-                return;
-        }
+        this.props.handleClick(this.props.id, this.props.id2);
     };
 
     render() {
         return (
             <div className={classNames(styles.light, this.props.positionClass)} style={this.state.style}
-                 onClick={this.handleChange}/>);
+        onClick={this.handleChange}/>);
     }
 }
 
@@ -95,6 +122,6 @@ Light.propTypes = {
     positionClass: PropTypes.string,
     isTurned: PropTypes.bool,
     id: PropTypes.number,
-    attemp: PropTypes.number,
-    functionPack: PropTypes.object
+    id2: PropTypes.number,
+    handleClick: PropTypes.func
 };
